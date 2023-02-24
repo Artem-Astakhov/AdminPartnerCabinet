@@ -3,16 +3,16 @@ import path from 'path';
 import fs from 'fs';
 import react from '@vitejs/plugin-react';
 
-const packages = fs.readdirSync(path.resolve(__dirname, '../../OtpPartnerShablon'));
+const packages = fs.readdirSync(path.resolve(__dirname, '../../'));
 const aliases = packages.reduce((acc, dirName) => {
     const packageJson = require(path.resolve(
         __dirname,
-        '../../OtpPartnerShablon',
+        '../../',
         'package.json'
     ));
     acc[packageJson.name] = path.resolve(
         __dirname,
-        `${path.resolve('../..')}/OtpPartnerShablon/${packageJson.name}/src`
+        `${path.resolve('../..')}/${packageJson.name}/src`
     );
     return acc;
 }, {});
