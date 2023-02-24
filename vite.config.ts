@@ -3,16 +3,16 @@ import path from 'path';
 import fs from 'fs';
 import react from '@vitejs/plugin-react';
 
-const packages = fs.readdirSync(path.resolve(__dirname, '../../'));
+const packages = fs.readdirSync(path.resolve(__dirname, '../../OtpPartnerShablon'));
 const aliases = packages.reduce((acc, dirName) => {
     const packageJson = require(path.resolve(
         __dirname,
-        '../../',
+        '../../OtpPartnerShablon',
         'package.json'
     ));
     acc[packageJson.name] = path.resolve(
         __dirname,
-        `${path.resolve('../..')}/${packageJson.name}/src`
+        `${path.resolve('../..')}/OtpPartnerShablon/${packageJson.name}/src`
     );
     return acc;
 }, {});
@@ -27,7 +27,7 @@ export default defineConfig({
         port: 8000,
         open: true,
     },
-    base: './',
+    base: '/AdminPartnerCabinet/',
     esbuild: {
         keepNames: true,
     },
