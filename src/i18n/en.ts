@@ -28,9 +28,9 @@ const customEnglishMessages: TranslationMessages = {
                     'by %{customer_name}, one item |||| by %{customer_name}, %{nb_items} items',
             },
             welcome: {
-                title: 'Кредит під депозит',
+                title: 'Акція! Бути вільним 4.0',
                 subtitle:
-                    "This is the admin of an imaginary poster shop. Feel free to explore and modify the data",
+                    "Кожен строковий депозит на суму від 10 000 грн або ощадний вклад на суму від 20 000 грн приймає участь в розіграші зарядної станції Bluetti",
                 ra_button: 'Деталі на сайті',
                 demo_button: 'Source for this demo',
             },
@@ -45,7 +45,7 @@ const customEnglishMessages: TranslationMessages = {
         customers: {
             name: 'Customer |||| Customers',
             fields: {
-                commands: 'Усі запити',
+                commands: 'Усі замовлення',
                 first_seen: 'First seen',
                 groups: 'Segments',
                 last_seen: 'Last seen',

@@ -11,14 +11,17 @@ import { lightTheme } from './layout/themes';
 
 import visitors from './visitors';
 import orders from './orders';
+import loanRequest from './loanRequest';
 import products from './products';
 import invoices from './invoices';
 import categories from './categories';
 import reviews from './reviews';
-import dataProviderFactory from './dataProvider';
+import dataProviderFactory from './dataProviderold';
+import dataProvider from './dataProvider/dataProvider';
 import Configuration from './configuration/Configuration';
 import Segments from './segments/Segments';
 import jsonServerProvider from "ra-data-json-server";
+import { fetchUtils } from "react-admin";
 
 const i18nProvider = polyglotI18nProvider(locale => {
     if (locale === 'fr') {
@@ -29,14 +32,21 @@ const i18nProvider = polyglotI18nProvider(locale => {
     return englishMessages;
 }, 'en');
 
-const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
+//const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
+
+const httpClient = (url:any, options = {headers:{}}) => {
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    const token = localStorage.getItem('token');
+    options.headers = new Headers({Authorization : `Bearer ${token}`});
+    return fetchUtils.fetchJson(url, options);
+};
 
 const App = () => (
     <Admin
         title=""
-        dataProvider={dataProviderFactory(
-            process.env.REACT_APP_DATA_PROVIDER || ''
-        )}
+        dataProvider={dataProvider("https://localhost:7017", httpClient)}
         authProvider={authProvider}
         dashboard={Dashboard}
         loginPage={Login}
@@ -50,6 +60,7 @@ const App = () => (
             <Route path="/segments" element={<Segments />} />
         </CustomRoutes>
         <Resource name="customers" {...visitors} />
+        <Resource name="loanRequest" {...loanRequest} />
         <Resource name="commands" {...orders} options={{ label: 'Orders' }} />
         <Resource name="invoices" {...invoices} />
         <Resource name="products" {...products} />

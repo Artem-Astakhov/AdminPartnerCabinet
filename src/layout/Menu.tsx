@@ -56,7 +56,7 @@ const Menu = ({ dense = false }: MenuProps) => {
                 dense={dense}
             >
                 <MenuItemLink
-                    to="/commands"
+                    to="/loanRequest"
                     state={{ _scrollToTop: true }}
                     primaryText={translate(`resources.commands.name`, {
                         smart_count: 2,

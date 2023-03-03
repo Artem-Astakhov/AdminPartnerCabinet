@@ -3,7 +3,7 @@ import { Box, Card, CardActions, Button, Typography } from '@mui/material';
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import CodeIcon from '@mui/icons-material/Code';
 import { useTranslate } from 'react-admin';
-
+import publishArticleImage from './11Picture1.png';
 
 const Welcome = () => {
     const translate = useTranslate();
@@ -45,13 +45,24 @@ const Welcome = () => {
                     >
                         <Button
                             variant="contained"
-                            href="https://marmelab.com/react-admin"
+                            href="https://www.otpbank.com.ua/action/be-free-4-0/#form-check"
                             startIcon={<CallMadeIcon/>}
                         >
                             {translate('pos.dashboard.welcome.ra_button')}
-                        </Button>
+                        </Button>                        
                     </CardActions>
-                </Box>               
+                </Box>
+                <Box
+                    display={{ xs: 'none', sm: 'none', md: 'block' }}
+                    sx={{
+                        background: `url(${publishArticleImage}) top right / contain no-repeat`,
+                        marginLeft: 'auto',
+                        color: 'blue',
+                    }}
+                    width="16em"
+                    height="9em"
+                    overflow="hidden"
+                    />              
             </Box>
         </Card>
     );

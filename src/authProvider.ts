@@ -1,19 +1,59 @@
 import { AuthProvider } from 'react-admin';
+import { fetchUtils } from "react-admin";
+
+const httpClient = fetchUtils.fetchJson;
 
 const authProvider: AuthProvider = {
-    login: ({ username }) => {
-        localStorage.setItem('username', username);
-        // accept all username/password combinations
-        return Promise.resolve();
+
+    login: ({ username, password }) => {
+        
+        var query = JSON.stringify({login:username, password:password});
+
+        // const requestOptions = {
+        //     method: 'POST',
+        //     headers: {'Content-Type': 'application/json'},
+        //     body: query,
+        // }
+        // return fetch('https://localhost:7017/Authentication/Login', requestOptions)
+        //     .then(response => response.json())
+        //     .then(({result}) => {
+        //         var token = result.token;
+        //         })
+
+        return httpClient('https://localhost:7017/Authentication/Login',{
+            method:'Post',
+            body: query,
+            headers: new Headers({'Content-Type': 'application/json'})
+        })       
+        .then(response => {
+            if(response.status < 200 || response.status > 300){
+                throw new Error(response.json);
+            }
+            return response.json;
+        })
+        .then(({token}) => {
+            localStorage.setItem('token', token);
+            localStorage.setItem('username', username);
+        })
+        .catch(() => {
+            throw new Error('Network error')
+        });
+        
     },
+
     logout: () => {
         localStorage.removeItem('username');
+        localStorage.removeItem('token');
         return Promise.resolve();
     },
+
     checkError: () => Promise.resolve(),
+
     checkAuth: () =>
         localStorage.getItem('username') ? Promise.resolve() : Promise.reject(),
+
     getPermissions: () => Promise.reject('Unknown method'),
+
     getIdentity: () =>
         Promise.resolve({
             id: 'user',

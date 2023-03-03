@@ -10,6 +10,7 @@
         "clsx": "^1.1.1",
         "data-generator-retail": "^4.0.0",
         "date-fns": "^2.19.0",
+        "eslint-import-resolver-typescript": "^3.5.3",
         "fakerest": "^3.0.0",
         "fetch-mock": "~9.11.0",
         "graphql": "^15.6.0",
