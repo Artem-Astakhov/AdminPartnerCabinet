@@ -26,7 +26,7 @@ import { useMediaQuery, Divider, Tabs, Tab, Theme } from '@mui/material';
 import NbItemsField from '../orders/NbItemsField';
 import CustomerReferenceField from '../visitors/CustomerReferenceField';
 import AddressField from '../visitors/AddressField';
-import MobileGrid from '../orders/MobileGrid';
+import MobileGrid from './MobileGrid';
 import { Customer } from '../types';
 
 const ListActions = () => (

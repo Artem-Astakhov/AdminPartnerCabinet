@@ -51,6 +51,24 @@ export interface BasketItem {
     quantity: number;
 }
 
+export interface LoanRequest extends RaRecord{
+    id: Identifier;
+    userId: Identifier;
+    contactName: string;
+    contactEmail: string;
+    contactPhone: string;
+    contactIpn: string;
+    carName: string;
+    carPrice: number;
+    carNumber: string;
+    firstPayment: number;
+    contactPassport: string;
+    createdOn: Date;
+    status: string;
+    step: number;
+    
+}
+
 export interface Invoice extends RaRecord {}
 
 export type ReviewStatus = 'accepted' | 'pending' | 'rejected';

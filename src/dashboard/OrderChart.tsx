@@ -12,7 +12,7 @@ import {
 import { useTranslate } from 'react-admin';
 import { format, subDays, addDays } from 'date-fns';
 
-import { Order } from '../types';
+import { Order, LoanRequest } from '../types';
 
 const lastDay = new Date();
 const lastMonthDays = Array.from({ length: 30 }, (_, i) => subDays(lastDay, i));
@@ -21,9 +21,9 @@ const aMonthAgo = subDays(new Date(), 30);
 const dateFormatter = (date: number): string =>
     new Date(date).toLocaleDateString();
 
-const aggregateOrdersByDay = (orders: Order[]): { [key: string]: number } =>
+const aggregateOrdersByDay = (orders: LoanRequest[]): { [key: string]: number } =>
     orders
-        .filter((order: Order) => order.status !== 'cancelled')
+        .filter((order: LoanRequest) => order.status !== 'Canceled')
         .reduce((acc, curr) => {
             const day = format(new Date(curr.date), 'yyyy-MM-dd');
             if (!acc[day]) {
@@ -33,7 +33,7 @@ const aggregateOrdersByDay = (orders: Order[]): { [key: string]: number } =>
             return acc;
         }, {} as { [key: string]: number });
 
-const getRevenuePerDay = (orders: Order[]): TotalByDay[] => {
+const getRevenuePerDay = (orders: LoanRequest[]): TotalByDay[] => {
     const daysWithRevenue = aggregateOrdersByDay(orders);
     return lastMonthDays.map(date => ({
         date: date.getTime(),
@@ -41,7 +41,7 @@ const getRevenuePerDay = (orders: Order[]): TotalByDay[] => {
     }));
 };
 
-const OrderChart = (props: { orders?: Order[] }) => {
+const OrderChart = (props: { orders?: LoanRequest[] }) => {
     const { orders } = props;
     const translate = useTranslate();
     if (!orders) return null;

@@ -24,7 +24,7 @@ const getResource = (resource: string) => {
             return 'Review';
 
         case 'loanRequest':
-            return 'LoanRequest/Get';    
+            return 'LoanRequest';    
 
         case 'invoices':
             return 'Invoice';
@@ -56,7 +56,7 @@ export default (
             range: JSON.stringify([rangeStart, rangeEnd]),
             filter: JSON.stringify(params.filter),
         };
-        const url = `${apiUrl}/${res}?${stringify(query)}`;
+        const url = `${apiUrl}/${res + "/Get"}?${stringify(query)}`;
         const token = localStorage.getItem('token');
     
         const options =
@@ -84,8 +84,8 @@ export default (
     },
 
     getOne: (resource, params) =>
-        httpClient(`${apiUrl}/${getResource(resource)}/${params.id}`).then(({ json }) => ({
-            data: json,
+        httpClient(`${apiUrl}/${getResource(resource) + "/Get"}/${params.id}`).then(({ json }) => ({
+            data: json.value,
         })),
 
     getMany: (resource, params) => {
@@ -162,7 +162,7 @@ export default (
         ).then(responses => ({ data: responses.map(({ json }) => json.id) })),
 
     create: (resource, params) =>
-        httpClient(`${apiUrl}/${resource}`, {
+        httpClient(`${apiUrl}/${getResource(resource) + "/Create"}`, {
             method: 'POST',
             body: JSON.stringify(params.data),
         }).then(({ json }) => ({

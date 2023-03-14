@@ -19,7 +19,7 @@ const PendingOrders = (props: Props) => {
     return (
         <Card sx={{ flex: 1 }}>
             <div style={{display:'flex', flexDirection:'row'}}><CardHeader title={translate('pos.dashboard.pending_orders')}/>
-                <div style={{marginTop:'auto', marginBottom:'auto', marginLeft:'auto', marginRight:'3%'}}><Link to={'/commands'}><PlayCircleOutlineIcon fontSize='large'/></Link></div>
+                <div style={{marginTop:'auto', marginBottom:'auto', marginLeft:'auto', marginRight:'3%'}}><Link to={'/loanRequest'}><PlayCircleOutlineIcon fontSize='large'/></Link></div>
             </div>
             <List dense={true}>
                 {orders.map(record => (

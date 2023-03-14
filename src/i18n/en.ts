@@ -87,7 +87,7 @@ const customEnglishMessages: TranslationMessages = {
         commands: {
             name: 'Запит |||| Усі запити',
             amount: '1 запит |||| %{smart_count} orders',
-            title: 'Запит %{reference}',
+            title: 'Запит %{carName}',
             fields: {
                 basket: {
                     delivery: 'Delivery',

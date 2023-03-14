@@ -17,6 +17,7 @@
         "graphql-tag": "^2.12.6",
         "inflection": "~1.12.0",
         "json-graphql-server": "~2.3.0",
+        "moment-timezone": "^0.5.41",
         "prop-types": "^15.6.1",
         "proxy-polyfill": "^0.3.0",
         "query-string": "^7.1.1",
@@ -33,8 +34,11 @@
         "react-admin": "^4.0.0",
         "react-app-polyfill": "^2.0.0",
         "react-dom": "^18.2.0",
+        "react-moment": "^1.1.3",
         "react-router-dom": "^6.3.0",
         "recharts": "^2.1.15",
+        "semantic-ui-css": "^2.5.0",
+        "semantic-ui-react": "^2.1.4",
         "vite": "^4.1.4"
     },
     "scripts": {

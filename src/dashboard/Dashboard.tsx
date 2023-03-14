@@ -11,18 +11,18 @@ import PendingReviews from './PendingReviews';
 import NewCustomers from './NewCustomers';
 import OrderChart from './OrderChart';
 
-import { Order } from '../types';
+import { Order, LoanRequest } from '../types';
 
 interface OrderStats {
     revenue: number;
     nbNewOrders: number;
-    pendingOrders: Order[];
+    pendingOrders: LoanRequest[];
 }
 
 interface State {
     nbNewOrders?: number;
-    pendingOrders?: Order[];
-    recentOrders?: Order[];
+    pendingOrders?: LoanRequest[];
+    recentOrders?: LoanRequest[];
     revenue?: string;
 }
 
@@ -46,7 +46,7 @@ const Dashboard = () => {
     );
     const aMonthAgo = useMemo(() => subDays(startOfDay(new Date()), 30), []);
 
-    const { data: orders } = useGetList<Order>('commands', {
+    const { data: orders } = useGetList<LoanRequest>('loanRequest', {
         filter: { date_gte: aMonthAgo.toISOString() },
         sort: { field: 'date', order: 'DESC' },
         pagination: { page: 1, perPage: 50 },
@@ -55,14 +55,14 @@ const Dashboard = () => {
     const aggregation = useMemo<State>(() => {
         if (!orders) return {};
         const aggregations = orders
-            .filter(order => order.status !== 'cancelled')
+            .filter(order => order.status !== 'Canceled')
             .reduce(
                 (stats: OrderStats, order) => {
-                    if (order.status !== 'cancelled') {
+                    if (order.status !== 'Canceled') {
                         stats.revenue += order.total;
                         stats.nbNewOrders++;
                     }
-                    if (order.status === 'ordered') {
+                    if (order.status === 'InProgress') {
                         stats.pendingOrders.push(order);
                     }
                     return stats;
@@ -77,7 +77,7 @@ const Dashboard = () => {
             recentOrders: orders,
             revenue: aggregations.revenue.toLocaleString(undefined, {
                 style: 'currency',
-                currency: 'USD',
+                currency: 'UAH',
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0,
             }),
@@ -109,9 +109,6 @@ const Dashboard = () => {
                 <NbNewOrders value={nbNewOrders} />
             </div>
             <div style={styles.singleCol}>
-                <OrderChart orders={recentOrders} />
-            </div>
-            <div style={styles.singleCol}>
                 <PendingOrders orders={pendingOrders} />
             </div>
         </div>
@@ -126,17 +123,7 @@ const Dashboard = () => {
                         <NbNewOrders value={nbNewOrders} />
                     </div>
                     <div style={styles.singleCol}>
-                        <OrderChart orders={recentOrders} />
-                    </div>
-                    <div style={styles.singleCol}>
                         <PendingOrders orders={pendingOrders} />
-                    </div>
-                </div>
-                <div style={styles.rightCol}>
-                    <div style={styles.flex}>
-                        <PendingReviews />
-                        <Spacer />
-                        <NewCustomers />
                     </div>
                 </div>
             </div>

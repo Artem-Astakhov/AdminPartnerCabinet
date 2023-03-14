@@ -34,7 +34,7 @@ const i18nProvider = polyglotI18nProvider(locale => {
 
 //const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 
-const httpClient = (url:any, options = {headers:{}}) => {
+const httpClient = (url:any, options:any = {headers:{}}) => {
     if (!options.headers) {
         options.headers = new Headers({ Accept: 'application/json' });
     }

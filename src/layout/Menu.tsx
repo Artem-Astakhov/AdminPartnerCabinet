@@ -64,7 +64,7 @@ const Menu = ({ dense = false }: MenuProps) => {
                     leftIcon={<orders.icon />}
                     dense={dense}
                 />
-                <MenuItemLink
+                {/* <MenuItemLink
                     to="/invoices"
                     state={{ _scrollToTop: true }}
                     primaryText={translate(`resources.invoices.name`, {
@@ -72,7 +72,7 @@ const Menu = ({ dense = false }: MenuProps) => {
                     })}
                     leftIcon={<invoices.icon />}
                     dense={dense}
-                />
+                /> */}
             </SubMenu>
             {/* <SubMenu
                 handleToggle={() => handleToggle('menuCatalog')}
@@ -126,7 +126,7 @@ const Menu = ({ dense = false }: MenuProps) => {
                     dense={dense}
                 />
             </SubMenu> */}
-            <MenuItemLink
+            {/* <MenuItemLink
                 to="/reviews"
                 state={{ _scrollToTop: true }}
                 primaryText={translate(`resources.reviews.name`, {
@@ -134,7 +134,7 @@ const Menu = ({ dense = false }: MenuProps) => {
                 })}
                 leftIcon={<reviews.icon />}
                 dense={dense}
-            />
+            /> */}
         </Box>
     );
 };

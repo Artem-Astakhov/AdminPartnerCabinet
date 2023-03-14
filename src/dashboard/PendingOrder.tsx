@@ -10,10 +10,10 @@ import {
 import { Link } from 'react-router-dom';
 import { useTranslate, useReference } from 'react-admin';
 
-import { Customer, Order } from '../types';
+import { Customer, Order, LoanRequest } from '../types';
 
 interface Props {
-    order: Order;
+    order: LoanRequest;
 }
 
 export const PendingOrder = (props: Props) => {
@@ -25,26 +25,13 @@ export const PendingOrder = (props: Props) => {
     });
 
     return (
-        <ListItem button component={Link} to={`/commands/${order.id}`}>
-            <ListItemAvatar>
-                {isLoading ? (
-                    <Avatar />
-                ) : (
-                    <Avatar
-                        src={`${customer?.avatar}?size=32x32`}
-                        sx={{ bgcolor: 'background.paper' }}
-                        alt={`${customer?.first_name} ${customer?.last_name}`}
-                    />
-                )}
-            </ListItemAvatar>
+        <ListItem button component={Link} to={`/loanRequest/${order.id}`}>
             <ListItemText
-                primary={new Date(order.date).toLocaleString('en-GB')}
+                primary={new Date(order.createdOn).toLocaleString('en-GB')}
                 secondary={translate('pos.dashboard.order.items', {
-                    smart_count: order.basket.length,
-                    nb_items: order.basket.length,
-                    customer_name: customer
-                        ? `${customer.first_name} ${customer.last_name}`
-                        : '',
+                    smart_count: 1,
+                    nb_items: 1,
+                    customer_name: order.contactName,
                 })}
             />
             <ListItemSecondaryAction>
