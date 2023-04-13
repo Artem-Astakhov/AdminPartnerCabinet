@@ -20,22 +20,32 @@ import {
     TextInput,
     TopToolbar,
     useListContext,
+    useRedirect
 } from 'react-admin';
+import { NavLink } from 'react-router-dom';
 import { useMediaQuery, Divider, Tabs, Tab, Theme } from '@mui/material';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import NbItemsField from '../orders/NbItemsField';
 import CustomerReferenceField from '../visitors/CustomerReferenceField';
 import AddressField from '../visitors/AddressField';
 import MobileGrid from './MobileGrid';
 import { Customer } from '../types';
 
-const ListActions = () => (
-    <TopToolbar>
-        <SelectColumnsButton />
-        <FilterButton />
-        <ExportButton />
-    </TopToolbar>
-);
+
+const ListActions = () => {
+    const isXSmall = useMediaQuery<Theme>(theme =>
+        theme.breakpoints.down('sm')
+    );
+    return (<TopToolbar>
+                {isXSmall ? (
+                <span style={{marginLeft:'0', marginRight:"auto"}}><NavLink to={'/'}><ArrowBackIcon fontSize='large' color='primary'  /></NavLink></span>
+                ) : (<span></span>)
+                }
+                <SelectColumnsButton />
+                <FilterButton />
+                <ExportButton />
+            </TopToolbar>)
+};
 
 const RequestList = () => (
     <List
@@ -78,7 +88,7 @@ const TabbedDatagrid = () => {
     const isXSmall = useMediaQuery<Theme>(theme =>
         theme.breakpoints.down('sm')
     );
-
+    const redirect = useRedirect();    
     const handleChange = useCallback(
         (event: React.ChangeEvent<{}>, value: any) => {
             setFilters &&
@@ -90,7 +100,9 @@ const TabbedDatagrid = () => {
         },
         [displayedFilters, filterValues, setFilters]
     );
-
+    const back = ()=>{
+        redirect('/');
+    }    
     return (
         <Fragment>
             <Tabs
@@ -128,31 +140,33 @@ const TabbedDatagrid = () => {
                     {filterValues.status === 'InProgress' && (
                         <DatagridConfigurable
                             rowClick="edit"
-                            omit={['contactIpn', 'contactEmail', 'status']}
+                            omit={['contactIpn', 'status']}
                         >
-                            <DateField source="createdOn" showTime />
-                            <TextField source="contactName" />
-                            <TextField source="contactEmail" />
-                            <TextField source="contactPhone" />
-                            <TextField source="contactIpn" />
-                            <TextField source="contactPassport" />
-                            <TextField source="carName" />
-                            <TextField source="carNumber" />
-                            <TextField source="status" />
-                            <CustomerReferenceField />
-
+                            <DateField source="createdOn" label="Дата"  showTime />
+                            <TextField source="contactName" label="Ім'я" />
+                            <TextField source="contactPhone" label="Контактний телефон" />
+                            <TextField source="contactIpn" label="ІПН" />
+                            <TextField source="contactPassport" label="Паспорт" />
+                            <TextField source="carName" label="Марка авто" />
+                            <TextField source="carNumber" label="Держ. номер" />
+                            <TextField source="status" label="Статус" />
+                            
                             <NumberField
                                 source="carPrice"
+                                label="Вартість"
                                 options={{
                                     style: 'currency',
                                     currency: 'UAH',
+                                    default: 0
                                 }}
                             />
                             <NumberField
                                 source="firstPayment"
+                                label="Початковий внесок"
                                 options={{
                                     style: 'currency',
                                     currency: 'UAH',
+                                    default: 0
                                 }}
                             />
                         </DatagridConfigurable>
@@ -160,21 +174,20 @@ const TabbedDatagrid = () => {
                     {filterValues.status === 'Done' && (
                         <DatagridConfigurable
                             rowClick="edit"
-                            omit={['contactIpn', 'contactEmail', 'status']}
+                            omit={['contactIpn', 'status']}
                         >
-                            <DateField source="createdOn" showTime />
-                            <TextField source="contactName" />
-                            <TextField source="contactEmail" />
-                            <TextField source="contactPhone" />
-                            <TextField source="contactIpn" />
-                            <TextField source="contactPassport" />
-                            <TextField source="carName" />
-                            <TextField source="carNumber" />
-                            <TextField source="status" />
-                            <CustomerReferenceField />
+                            <DateField source="createdOn" label="Дата"  showTime />
+                            <TextField source="contactName" label="Ім'я" />
+                            <TextField source="contactPhone" label="Контактний телефон" />
+                            <TextField source="contactIpn" label="ІПН" />
+                            <TextField source="contactPassport" label="Паспорт" />
+                            <TextField source="carName" label="Марка авто" />
+                            <TextField source="carNumber" label="Держ. номер" />
+                            <TextField source="status" label="Статус" />
 
                             <NumberField
                                 source="carPrice"
+                                label="Вартість"
                                 options={{
                                     style: 'currency',
                                     currency: 'UAH',
@@ -182,6 +195,7 @@ const TabbedDatagrid = () => {
                             />
                             <NumberField
                                 source="firstPayment"
+                                label="Початковий внесок"
                                 options={{
                                     style: 'currency',
                                     currency: 'UAH',
@@ -192,21 +206,20 @@ const TabbedDatagrid = () => {
                     {filterValues.status === 'Canceled' && (
                         <DatagridConfigurable
                             rowClick="edit"
-                            omit={['contactIpn', 'contactEmail', 'status']}
+                            omit={['contactIpn', 'status']}
                         >
-                            <DateField source="createdOn" showTime />
-                            <TextField source="contactName" />
-                            <TextField source="contactEmail" />
-                            <TextField source="contactPhone" />
-                            <TextField source="contactIpn" />
-                            <TextField source="contactPassport" />
-                            <TextField source="carName" />
-                            <TextField source="carNumber" />
-                            <TextField source="status" />
-                            <CustomerReferenceField />
+                            <DateField source="createdOn" label="Дата"  showTime />
+                            <TextField source="contactName" label="Ім'я" />
+                            <TextField source="contactPhone" label="Контактний телефон" />
+                            <TextField source="contactIpn" label="ІПН" />
+                            <TextField source="contactPassport" label="Паспорт" />
+                            <TextField source="carName" label="Марка авто" />
+                            <TextField source="carNumber" label="Держ. номер" />
+                            <TextField source="status" label="Статус" />
 
                             <NumberField
                                 source="carPrice"
+                                label="Вартість"
                                 options={{
                                     style: 'currency',
                                     currency: 'UAH',
@@ -214,6 +227,7 @@ const TabbedDatagrid = () => {
                             />
                             <NumberField
                                 source="firstPayment"
+                                label="Початковий внесок"
                                 options={{
                                     style: 'currency',
                                     currency: 'UAH',

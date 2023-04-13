@@ -34,19 +34,74 @@ const getResource = (resource: string) => {
     }
 };
 
+const toBase64 = (file:any) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file.rawFile);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
 
+// function getBase64(file:any) {
+//     var reader = new FileReader();
+//     reader.readAsDataURL(file.rawFile);
+//     reader.onload = function () {
+//       reader.result;
+//     };
+//     reader.onerror = function (error) {
+//       console.log('Error: ', error);
+//     };
+//  }
+const convertFileToBase64 = (file:any) =>
+    new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+
+        reader.readAsDataURL(file.rawFile);
+    });
+
+// const convertFileToBase64 = (file:any) => {
+
+//         const reader = new FileReader();
+//         reader.onload = function(){
+//            file.src = reader.result;
+//         }
+//         reader.readAsDataURL(file.rawFile);
+// }
+
+const checkAttachment = async (data:any) =>{
+    if(!data.attachments || data.attachments === undefined) return data;
+    await Promise.all(data.attachments.map(async (item:any) => {
+        await convertFileToBase64(item).then((base64:any)=>{
+            item.src = base64;
+        })
+    }))
+    return data;
+}
+
+const getServerUrl = ()=>{
+    return fetch('config.json').then((res)=>res.json()).then(async (data)=>{
+    return data;
+   })
+}
+const getUrl = async () =>{
+    var data = await getServerUrl();
+    var url = data.SERVER_URL;
+    return url;
+}
 
 // TypeScript users must reference the type `DataProvider`
 export default (
-    apiUrl: string,
+    //apiUrl: string,
     httpClient = fetchUtils.fetchJson,
     countHeader: string = 'Content-Range',    
 ): DataProvider => ({
 
-    getList: (resource, params) => {
+    getList: async (resource, params) => {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
 
+        var serverUrl = await getUrl();
         var res = getResource(resource);
         const rangeStart = (page - 1) * perPage;
         const rangeEnd = page * perPage - 1;
@@ -56,7 +111,7 @@ export default (
             range: JSON.stringify([rangeStart, rangeEnd]),
             filter: JSON.stringify(params.filter),
         };
-        const url = `${apiUrl}/${res + "/Get"}?${stringify(query)}`;
+        const url = `${serverUrl}/${res + "/Get"}?${stringify(query)}`;
         const token = localStorage.getItem('token');
     
         const options =
@@ -83,10 +138,12 @@ export default (
         });
     },
 
-    getOne: (resource, params) =>
-        httpClient(`${apiUrl}/${getResource(resource) + "/Get"}/${params.id}`).then(({ json }) => ({
+    getOne: async (resource, params) =>{
+        var serverUrl = await getUrl();
+
+        return httpClient(`${serverUrl}/${getResource(resource) + "/Get"}/${params.id}`).then(({ json }) => ({
             data: json.value,
-        })),
+        }))},
 
     getMany: (resource, params) => {
         const query = {
@@ -161,13 +218,15 @@ export default (
             )
         ).then(responses => ({ data: responses.map(({ json }) => json.id) })),
 
-    create: (resource, params) =>
-        httpClient(`${apiUrl}/${getResource(resource) + "/Create"}`, {
-            method: 'POST',
-            body: JSON.stringify(params.data),
-        }).then(({ json }) => ({
-            data: { ...params.data, id: json.id },
-        })),
+        create: async (resource, params) => {
+            var serverUrl = await getUrl();
+            return httpClient(`${serverUrl}/${getResource(resource) + "/Create"}`, {
+                method: 'POST',
+                body: JSON.stringify(await (checkAttachment(params.data))),
+            }).then(({ json }) => ({
+                data: { ...params.data, id: json.id },
+            }))
+        },
 
     delete: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {

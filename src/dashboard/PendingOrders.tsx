@@ -5,11 +5,11 @@ import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import { Link, To } from 'react-router-dom';
 
 
-import { Order } from '../types';
+import { LoanRequest, Order } from '../types';
 import { PendingOrder } from './PendingOrder';
 
 interface Props {
-    orders?: Order[];
+    orders?: LoanRequest[];
 }
 
 const PendingOrders = (props: Props) => {
@@ -19,7 +19,7 @@ const PendingOrders = (props: Props) => {
     return (
         <Card sx={{ flex: 1 }}>
             <div style={{display:'flex', flexDirection:'row'}}><CardHeader title={translate('pos.dashboard.pending_orders')}/>
-                <div style={{marginTop:'auto', marginBottom:'auto', marginLeft:'auto', marginRight:'3%'}}><Link to={'/loanRequest'}><PlayCircleOutlineIcon fontSize='large'/></Link></div>
+                <div style={{marginTop:'auto', marginBottom:'auto', marginLeft:'auto', marginRight:'3%'}}><Link to={'/loanRequest'}><PlayCircleOutlineIcon color='success' fontSize='large'/></Link></div>
             </div>
             <List dense={true}>
                 {orders.map(record => (

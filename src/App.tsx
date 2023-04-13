@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Admin, CustomRoutes, Resource, ListGuesser } from 'react-admin';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import { Route } from 'react-router';
-
+import { useState, useEffect } from 'react';
 import authProvider from './authProvider';
 import { Login, Layout } from './layout';
 import { Dashboard } from './dashboard';
@@ -16,12 +16,13 @@ import products from './products';
 import invoices from './invoices';
 import categories from './categories';
 import reviews from './reviews';
-import dataProviderFactory from './dataProviderold';
+
 import dataProvider from './dataProvider/dataProvider';
 import Configuration from './configuration/Configuration';
 import Segments from './segments/Segments';
-import jsonServerProvider from "ra-data-json-server";
+import Calculator from './calculator/Calculator';
 import { fetchUtils } from "react-admin";
+
 
 const i18nProvider = polyglotI18nProvider(locale => {
     if (locale === 'fr') {
@@ -43,10 +44,12 @@ const httpClient = (url:any, options:any = {headers:{}}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
-const App = () => (
+
+const App = () => 
+    (
     <Admin
         title=""
-        dataProvider={dataProvider("https://localhost:7017", httpClient)}
+        dataProvider={dataProvider(httpClient)}
         authProvider={authProvider}
         dashboard={Dashboard}
         loginPage={Login}
@@ -58,9 +61,10 @@ const App = () => (
         <CustomRoutes>
             <Route path="/configuration" element={<Configuration />} />
             <Route path="/segments" element={<Segments />} />
+            <Route path="/calculator" element={<Calculator />} />
         </CustomRoutes>
         <Resource name="customers" {...visitors} />
-        <Resource name="loanRequest" {...loanRequest} />
+        <Resource name="loanRequest" {...loanRequest} options={{ label: 'Запити' }}/>
         <Resource name="commands" {...orders} options={{ label: 'Orders' }} />
         <Resource name="invoices" {...invoices} />
         <Resource name="products" {...products} />

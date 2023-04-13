@@ -4,7 +4,7 @@ import { Card, Box, Typography, Divider } from '@mui/material';
 import { Link, To } from 'react-router-dom';
 import { ReactNode } from 'react';
 
-import cartouche from './cartouche.png';
+import cartouche from './two2.png';
 import cartoucheDark from './cartoucheDark.png';
 
 interface Props {
@@ -46,7 +46,7 @@ const CardWithIcon = ({ icon, title, subtitle, to, children }: Props) => (
                         color: theme =>
                             theme.palette.mode === 'dark'
                                 ? 'inherit'
-                                : '#dc2440',
+                                : 'white',
                     },
                 }}
             >

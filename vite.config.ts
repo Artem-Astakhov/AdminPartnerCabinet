@@ -24,10 +24,10 @@ export default defineConfig({
         'process.env': process.env,
     },
     server: {
-        port: 8000,
+        port: 89,
         open: true,
     },
-    base: '/AdminPartnerCabinet/',
+    base: '/',
     esbuild: {
         keepNames: true,
     },

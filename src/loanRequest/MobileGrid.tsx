@@ -31,14 +31,14 @@ const MobileGrid = (props: MobileGridProps) => {
     function setProgressBarColor(number:any){
         switch(number){
             case 1:
-                return 'gray';
+                return 'grey';
+            case 2:
+                return 'yellow';
             case 3:
-                return 'blue';
-            case 5:
-                return 'green';
-            case 4:
                 return 'olive';
-            default: return 'gray';
+            case 4:
+                return 'green';
+            default: return 'grey';
 
         }
     }
@@ -70,14 +70,12 @@ const MobileGrid = (props: MobileGridProps) => {
                                 sx={{ display: 'block', mb: 1 }}
                             />
                             <Typography variant="body2" gutterBottom>
-                                {translate('resources.reviews.fields.date')}
+                                {"Дата"}
                                 :&nbsp;
                                 <DateField source="createdOn" showTime />
                             </Typography>
                             <Typography variant="body2" gutterBottom>
-                                {translate(
-                                    'resources.commands.fields.basket.total'
-                                )}
+                                {"Ціна"}
                                 :&nbsp;
                                 <NumberField
                                     source="carPrice"
@@ -87,20 +85,20 @@ const MobileGrid = (props: MobileGridProps) => {
                                     }}
                                 />
                             </Typography>
-                            <Typography variant="body2" gutterBottom>
-                                {translate('resources.commands.fields.status')}
+                            {/* <Typography variant="body2" gutterBottom>
+                                {"Статус"}
                                 :&nbsp;
                                 <TextField source="status" />
                             </Typography>
                             <Typography variant="body2">
-                                {'Name'}
+                                {"Ім'я"}
                                 :&nbsp;
                                 <TextField source="contactName" />
-                            </Typography>
+                            </Typography> */}
                             <Typography variant="body2">
-                            &nbsp;
-                                <Progress progress='ratio' value={record.step} total={5} active size='medium' color={setProgressBarColor(record.step) as any}></Progress>
+                            &nbsp;                        
                             </Typography>
+                            <Progress progress='ratio' value={record.step} total={4} active size='medium' color={setProgressBarColor(record.step) as any}></Progress>
                         </CardContent>
                     </Card>
                 </RecordContextProvider>

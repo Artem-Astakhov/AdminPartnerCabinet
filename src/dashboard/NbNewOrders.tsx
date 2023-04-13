@@ -13,7 +13,7 @@ const NbNewOrders = (props: Props) => {
     const translate = useTranslate();
     return (
         <CardWithIcon
-            to='https://ru.otpbank.com.ua/privateclients/crediting/cash-loan/#calculator'
+            to='/calculator'
             icon={CalculateIcon}
             title={translate('pos.dashboard.calculator')}
             subtitle={'Платіж по кредиту'}

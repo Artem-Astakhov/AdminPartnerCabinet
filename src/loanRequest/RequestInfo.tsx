@@ -30,9 +30,9 @@ const RequestInfo = ({name, price, quantity, firstPayment}: RequestProps) => {
                     <TableCell>
                         {'Перший платіж'}
                     </TableCell>
-                    <TableCell>
+                    {/* <TableCell>
                         {'Кількість'}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
                         {'Ціна'}
                     </TableCell>
@@ -44,19 +44,31 @@ const RequestInfo = ({name, price, quantity, firstPayment}: RequestProps) => {
                             {name}
                         </TableCell>
                         <TableCell>
-                            {firstPayment.toLocaleString(
+                            {firstPayment === null ? Number(0).toLocaleString(
                                 undefined,
                                 {
                                     style: 'currency',
-                                    currency: 'USD',
+                                    currency: 'UAH',
+                                }
+                            ) : firstPayment.toLocaleString(
+                                undefined,
+                                {
+                                    style: 'currency',
+                                    currency: 'UAH',
                                 }
                             )}
                         </TableCell>
-                        <TableCell>{quantity}</TableCell>
+                        {/* <TableCell>{quantity}</TableCell> */}
                         <TableCell>
-                            {price.toLocaleString(undefined, {
+                            {price === null ? Number(0).toLocaleString(
+                                undefined,
+                                {
+                                    style: 'currency',
+                                    currency: 'UAH',
+                                }
+                            ) : price.toLocaleString(undefined, {
                                 style: 'currency',
-                                currency: 'USD',
+                                currency: 'UAH',
                             })}
                         </TableCell>
                     </TableRow>

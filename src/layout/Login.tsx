@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
+import { Message, Input } from 'semantic-ui-react'
 
 import {
     Avatar,
@@ -18,17 +19,26 @@ import {
     useTranslate,
     useLogin,
     useNotify,
+    regex,
 } from 'react-admin';
 
 import Box from '@mui/material/Box';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
+    const [authInput, setAuthInput] = useState("+38");
     const translate = useTranslate();
 
     const notify = useNotify();
     const login = useLogin();
     const location = useLocation();
+
+    function handleClick(){   
+        setAuthInput("+380");
+      };
+    function handleChange(e:any){
+    setAuthInput(e.target.value);
+    };
 
     const handleSubmit = (auth: FormValues) => {
         setLoading(true);
@@ -93,20 +103,21 @@ const Login = () => {
                             color: theme => theme.palette.grey[500],
                         }}
                     >
-                        Hint: demo / demo
+                        Кабінет партнера
                     </Box>
                     <Box sx={{ padding: '0 1em 1em 1em' }}>
                         <Box sx={{ marginTop: '1em' }}>
                             <TextInput
-                                autoFocus
-                                source="username"
-                                label={translate('ra.auth.username')}
+                                autoFocus                                
+                                source="phone"
+                                label={"Введіть номер телефону"}
                                 disabled={loading}
-                                validate={required()}
+                                validate={regex(new RegExp(/^\+380\d{3}\d{2}\d{2}\d{2}$/), "Номер в форматі '+380630000000'")}
                                 fullWidth
+                                defaultValue={authInput}                                
                             />
                         </Box>
-                        <Box sx={{ marginTop: '1em' }}>
+                        {/* <Box sx={{ marginTop: '1em' }}>
                             <TextInput
                                 source="password"
                                 label={translate('ra.auth.password')}
@@ -115,8 +126,9 @@ const Login = () => {
                                 validate={required()}
                                 fullWidth
                             />
-                        </Box>
+                        </Box> */}
                     </Box>
+                    
                     <CardActions sx={{ padding: '0 1em 1em 1em' }}>
                         <Button
                             variant="contained"
@@ -128,9 +140,12 @@ const Login = () => {
                             {loading && (
                                 <CircularProgress size={25} thickness={2} />
                             )}
-                            {translate('ra.auth.sign_in')}
+                            {"Вперед"}
                         </Button>
                     </CardActions>
+                    <Message>
+                        Заходите вперше? <a href='#'>Реєстрація</a>
+                    </Message>
                 </Card>
             </Box>
         </Form>

@@ -3,11 +3,22 @@ import { fetchUtils } from "react-admin";
 
 const httpClient = fetchUtils.fetchJson;
 
+const getServerUrl = ()=>{
+    return fetch('config.json').then((res)=>res.json()).then(async (data)=>{
+    return data;
+   })
+}
+const getUrl = async () =>{
+    var data = await getServerUrl();
+    var url = data.SERVER_URL;
+    return url;
+}
+
 const authProvider: AuthProvider = {
 
-    login: ({ username, password }) => {
-        
-        var query = JSON.stringify({login:username, password:password});
+    login: async ({ phone, password }) => {
+        var serverUrl = await getUrl();
+        var query = JSON.stringify({phone:phone, password:password});
 
         // const requestOptions = {
         //     method: 'POST',
@@ -20,7 +31,7 @@ const authProvider: AuthProvider = {
         //         var token = result.token;
         //         })
 
-        return httpClient('https://localhost:7017/Authentication/Login',{
+        return httpClient(serverUrl + '/Authentication/Login',{
             method:'Post',
             body: query,
             headers: new Headers({'Content-Type': 'application/json'})
@@ -29,11 +40,15 @@ const authProvider: AuthProvider = {
             if(response.status < 200 || response.status > 300){
                 throw new Error(response.json);
             }
+            var h = document.cookie;
+            response.headers.forEach((item)=>{
+                var coc = item;
+            })
             return response.json;
         })
         .then(({token}) => {
             localStorage.setItem('token', token);
-            localStorage.setItem('username', username);
+            localStorage.setItem('username', "TestApp");
         })
         .catch(() => {
             throw new Error('Network error')

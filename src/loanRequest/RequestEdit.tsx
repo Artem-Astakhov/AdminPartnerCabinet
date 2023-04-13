@@ -52,7 +52,7 @@ const OrderForm = () => {
                             <Grid item xs={12} sm={12} md={8}>
                                 <Grid container>
                                     <Grid item xs={12} sm={12} md={6}>
-                                        <Labeled source="createdOn">
+                                        <Labeled source="дата">
                                             <DateField source="createdOn" />
                                         </Labeled>
                                     </Grid>
@@ -65,21 +65,22 @@ const OrderForm = () => {
                                 <Grid container>
                                     <Grid item xs={12} sm={12} md={6}>
                                         <SelectInput
-                                            source="status" 
+                                            source="status"
+                                            label="Статус" 
                                             choices={[
                                                 {
                                                     id: 'InProgress',
-                                                    name: 'InProgress',
+                                                    name: 'В прогресі',
 
                                                 },
                                                 {
                                                     id: 'Done',
-                                                    name: 'Done',
+                                                    name: 'Виконаний',
                                                     disabled: true,
                                                 },
                                                 {
                                                     id: 'Canceled',
-                                                    name: 'Canceled',
+                                                    name: 'Відмінений',
                                                     disabled: true,
                                                 },
                                             ]}                                          
@@ -99,7 +100,7 @@ const OrderForm = () => {
                         </Grid>
                         <Spacer />
                         <Typography variant="h6" gutterBottom>
-                            {translate('resources.commands.section.items')}
+                            {"Інформація про запит"}
                         </Typography>
                         <div>
                             <RequestInfo name={record.carName} price={record.carPrice} quantity={1} firstPayment={record.firstPayment} />

@@ -14,7 +14,7 @@ const Welcome = () => {
                 background: theme =>
                     theme.palette.mode === 'dark'
                         ? '#535353'
-                        : `linear-gradient(to right, #8975fb 0%, #746be7 35%), linear-gradient(to bottom, #8975fb 0%, #6f4ceb 50%), #6f4ceb`,
+                        : `linear-gradient(to right, #52AE30  0%, #006648 200%), linear-gradient(to bottom, #52AE30 0%, #006648 50%), #6f4ceb`,
 
                 color: '#fff',
                 padding: '20px',
@@ -45,6 +45,7 @@ const Welcome = () => {
                     >
                         <Button
                             variant="contained"
+                            color='success'
                             href="https://www.otpbank.com.ua/action/be-free-4-0/#form-check"
                             startIcon={<CallMadeIcon/>}
                         >
