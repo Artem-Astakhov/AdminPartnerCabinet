@@ -47,7 +47,7 @@ const Menu = ({ dense = false }: MenuProps) => {
                     }),
             }}
         >
-            <DashboardMenuItem />
+            <DashboardMenuItem primaryText="Головна"/>
             <SubMenu
                 handleToggle={() => handleToggle('menuSales')}
                 isOpen={state.menuSales}

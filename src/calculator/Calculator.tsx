@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RadioGroup, RadioButton, ReversedRadioButton } from 'react-radio-buttons';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery, Theme } from '@mui/material';
 import { useState, useEffect } from 'react';
 import {
     Form,
@@ -22,11 +22,26 @@ import {
 import { TextArea } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import { string } from 'prop-types';
+import { NavLink } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
 interface FormValues {
     amount?: number
 }
+
+const ListActions = () => {
+    const isXSmall = useMediaQuery<Theme>(theme =>
+        theme.breakpoints.down('sm')
+    );
+    return (<div>
+            {isXSmall ? (
+            <span style={{marginLeft:'0', marginRight:"auto"}}><NavLink to={'/'}><ArrowBackIcon fontSize='large' color='success'  /></NavLink></span>
+            ) : (<span></span>)
+            } 
+            </div>              
+        )
+};
 
 const Calculator = ()=> {
     const [loading, setLoading] = useState(false);
@@ -97,9 +112,11 @@ const Calculator = ()=> {
 
     const Spacer = () => <Box m={1}>&nbsp;</Box>;
     return(
-        <Form onSubmit={handleSubmit} noValidate>
-            <Card>
-                <Box maxWidth="50em">
+        <div>
+        <ListActions/>
+        <Form onSubmit={handleSubmit} noValidate>           
+            <Card>           
+                <Box maxWidth="50em">                   
                     <div  style={ { padding: 16 } }>
                         <Typography variant="h6" gutterBottom>
                             {"Оберіть пакет:"}
@@ -164,6 +181,7 @@ const Calculator = ()=> {
                 </Box>
             </Card>        
         </Form>
+        </div>
     )
 }
 
