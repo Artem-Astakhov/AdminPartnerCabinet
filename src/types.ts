@@ -66,7 +66,13 @@ export interface LoanRequest extends RaRecord{
     createdOn: Date;
     status: string;
     step: number;
-    
+    requestHistoryDates: RequestHistoryDates[];  
+}
+
+export interface RequestHistoryDates extends RaRecord{
+    id: Identifier;
+    approveStep: Date;
+    step : number;
 }
 
 export interface Invoice extends RaRecord {}

@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import StepContent from '@mui/material/StepContent';
 import 'moment-timezone';
 import { autocompleteClasses } from '@mui/material';
+//import {makeStyles} from "@material-ui/core";
 import {
   BooleanInput,
   DateField,
@@ -19,15 +20,19 @@ import {
   TextField,
   Toolbar,
   useRecordContext,
+  useTheme,
   useTranslate,
 } from 'react-admin';
+import { LoanRequest, RequestHistoryDates } from '../types';
 
 const steps = [
-    'Отримали запит',
-    'Робота з клієнтом',
-    'Є позитивне рішення',
-    'Гроші отримані',
+    {name: 'Отримали запит', step: 1},
+    {name: 'Робота з клієнтом', step: 2},
+    {name: 'Є позитивне рішення', step: 3},
+    {name: 'Гроші отримані', step: 4},
 ];
+
+
 
 const TypographySx = {
   zIndex: "2",
@@ -46,23 +51,42 @@ const boxCss = {
   alignItems: 'center',
 }
 
-export default function VerticalLinearStepper({activeStep, data}:any) {
-    
+const VerticalLinearStepper = ({activeStep, data}: any) => {
+  var a: any[] = [];
+  if (data != undefined){
+    a = data;
+  }
+  // function App() {
+  //   const useStyles = makeStyles(() => ({
+  //     root: {
+  //       "& .MuiStepIcon-active": { color: "red" },
+  //       "& .MuiStepIcon-completed": { color: "green" },
+  //       "& .Mui-disabled .MuiStepIcon-root": { color: "cyan" }
+  //     }
+  //   }))};
+  
+  // const c = useStyles();
+
   return (
     <Box sx={boxCss}>
       <Stepper
         activeStep={activeStep}
         orientation="vertical"
       >
-        {steps.map((label) => (
-          <Step key={label}>
+        {steps.map((label) => {
+          var stepTime = new Date(a.find(s=>s.step === label.step)?.approveStep);
+          return (         
+          <Step key={label.name}>
             <Typography sx={TypographySx}>
-              <DateField style={{fontSize:'11px'}} className='requestCardTextStyle' source="createdOn" showTime></DateField>
+              {stepTime.toLocaleString()}
+              <DateField style={{fontSize:'11px'}} className='requestCardTextStyle' source="approveStep" showTime>{stepTime}</DateField>
             </Typography>
-            <StepLabel><span className='requestCardTextStyle'>{label}</span></StepLabel>
+            <StepLabel><span className='requestCardTextStyle'>{label.name}</span></StepLabel>
           </Step>
-        ))}
+        )})}
+
       </Stepper>     
     </Box>
   );
 }
+export default VerticalLinearStepper;

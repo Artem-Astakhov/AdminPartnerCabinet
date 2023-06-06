@@ -111,7 +111,7 @@ const OrderForm = () => {
                                 {'Кроки'}
                             </Typography>
                             <div>
-                                <VerticalLinearStepper activeStep={record.step} data ={record.createdOn}/> 
+                                <VerticalLinearStepper activeStep={record.step} data ={record.requestHistoryDates}/> 
                             </div>
                         </Grid> 
                         <Spacer />
