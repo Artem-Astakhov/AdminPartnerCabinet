@@ -19,7 +19,7 @@ const Configuration = () => {
                 <Box sx={{ width: '10em', display: 'inline-block' }}>
                     {translate('pos.theme.name')}
                 </Box>
-                <Button
+                {/* <Button
                     variant="contained"
                     sx={{ margin: '1em' }}
                     color={
@@ -42,7 +42,7 @@ const Configuration = () => {
                     onClick={() => setTheme(darkTheme)}
                 >
                     {translate('pos.theme.dark')}
-                </Button>
+                </Button> */}
             </CardContent>
             <CardContent>
                 <Box sx={{ width: '10em', display: 'inline-block' }}>

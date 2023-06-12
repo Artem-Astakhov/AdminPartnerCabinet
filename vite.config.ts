@@ -3,51 +3,64 @@ import path from 'path';
 import fs from 'fs';
 import react from '@vitejs/plugin-react';
 
-const packages = fs.readdirSync(path.resolve(__dirname, '../../OtpPartnerShablon'));
-const aliases = packages.reduce((acc, dirName) => {
-    const packageJson = require(path.resolve(
-        __dirname,
-        '../../OtpPartnerShablon',
-        'package.json'
-    ));
-    acc[packageJson.name] = path.resolve(
-        __dirname,
-        `${path.resolve('../..')}/OtpPartnerShablon/${packageJson.name}/src`
-    );
-    return acc;
-}, {});
+// const packages = fs.readdirSync(path.resolve(__dirname, '../../OtpPartnerShablon'));
+// const aliases = packages.reduce((acc, dirName) => {
+//     const packageJson = require(path.resolve(
+//         __dirname,
+//         '../../OtpPartnerShablon',
+//         'package.json'
+//     ));
+//     acc[packageJson.name] = path.resolve(
+//         __dirname,
+//         `${path.resolve('../..')}/OtpPartnerShablon/${packageJson.name}/src`
+//     );
+//     return acc;
+// }, {});
 
-// https://vitejs.dev/config/
+// // https://vitejs.dev/config/
+// export default defineConfig({
+//     plugins: [react()],
+//     define: {
+//         'process.env': process.env,
+//     },
+//     server: {
+//         port: 89,
+//         open: true,
+//     },
+//     base: '/',
+//     esbuild: {
+//         keepNames: true,
+//     },
+//     build: {
+//         sourcemap: true,
+//     },
+//     resolve: {
+//         preserveSymlinks: true,
+//         alias: [
+//             // allow profiling in production
+//             { find: 'react-dom', replacement: 'react-dom/profiling' },
+//             {
+//                 find: 'scheduler/tracing',
+//                 replacement: 'scheduler/tracing-profiling',
+//             },
+//             // we need to manually follow the symlinks for local packages to allow deep HMR
+//             ...Object.keys(aliases).map(packageName => ({
+//                 find: packageName,
+//                 replacement: aliases[packageName],
+//             })),
+//         ],
+//     },
+// });
 export default defineConfig({
     plugins: [react()],
-    define: {
-        'process.env': process.env,
-    },
     server: {
-        port: 89,
-        open: true,
-    },
-    base: '/',
-    esbuild: {
-        keepNames: true,
-    },
-    build: {
-        sourcemap: true,
-    },
-    resolve: {
-        preserveSymlinks: true,
-        alias: [
-            // allow profiling in production
-            { find: 'react-dom', replacement: 'react-dom/profiling' },
-            {
-                find: 'scheduler/tracing',
-                replacement: 'scheduler/tracing-profiling',
-            },
-            // we need to manually follow the symlinks for local packages to allow deep HMR
-            ...Object.keys(aliases).map(packageName => ({
-                find: packageName,
-                replacement: aliases[packageName],
-            })),
-        ],
-    },
-});
+      host: "0.0.0.0",
+      port: 80,
+     // This is the port which we will use in docker
+      // Thanks @sergiomoura for the window fix
+      // add the next lines if you're using windows and hot reload doesn't work
+       watch: {
+         usePolling: true
+       }
+    }
+   })
