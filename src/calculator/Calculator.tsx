@@ -48,6 +48,7 @@ const Calculator = ()=> {
     const [LoanProduct, setLoanProduct] = useState<{ name: string }[]>([]);
     const [verticalButtonValue, setVerticalButtonValue] = useState("");
     const [horizontalButtonValue, setHorizontalButtonValue] = useState(0);
+    
     const [monthlyPayment, setMonthlyPayment] = useState("");
     const [creditBody, setCreditBody] = useState("");
 

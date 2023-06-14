@@ -46,8 +46,14 @@ const Dashboard = () => {
     );
     const aMonthAgo = useMemo(() => subDays(startOfDay(new Date()), 30), []);
 
+    var day = aMonthAgo.getDate();
+    var month = aMonthAgo.getMonth() > 8 ? aMonthAgo.getMonth() + 1 : `0${aMonthAgo.getMonth() + 1}`;
+    var year = aMonthAgo.getFullYear();
+    
+    var concateData = `${day}.${month}.${year} 00:00:00`
+
     const { data: orders } = useGetList<LoanRequest>('loanRequest', {
-        filter: { date_gte: aMonthAgo.toISOString() },
+        filter: { date_gte: concateData },
         sort: { field: 'date', order: 'DESC' },
         pagination: { page: 1, perPage: 50 },
     });
